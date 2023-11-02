@@ -8,16 +8,14 @@ phases:
   pre_build:
     on-failure: ABORT
     commands:
-      - echo Nothing to do in the pre_build phase...
       - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 570033531346.dkr.ecr.ap-northeast-1.amazonaws.com
   build:
     on-failure: ABORT
     commands:
-      - echo Build started on `date`
       - docker build -t api .
       - docker tag api:latest 570033531346.dkr.ecr.ap-northeast-1.amazonaws.com/api:latest
   post_build:
     on-failure: ABORT
     commands:
-      - echo Build completed on `date`
+      - docker images ls -a
       - docker push 570033531346.dkr.ecr.ap-northeast-1.amazonaws.com/api:latest
