@@ -1,0 +1,78 @@
+version: '2'
+services:
+  # nginx:
+  #   build: ./docker/nginx
+  #   volumes:
+  #     - ./api/:/src
+  #   ports:
+  #     - 443:443
+  #     - 80:80
+  #   depends_on:
+  #     - api
+  #     # - phpmyadmin
+  #     # - app
+  #     # - cms
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    volumes:
+      - ./api/:/var/www/html/api
+    ports:
+      - 8080:8080
+    # links:
+    #   - mysql
+    # depends_on:
+    #   - mysql
+  # mysql:
+  #   image: mysql/mysql-server:8.0.20
+  #   volumes:
+  #     - ./docker/mysql/conf.d:/etc/mysql/conf.d
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=password
+  #     - MYSQL_DATABASE=fum
+  #     - MYSQL_USER=root
+  #     - MYSQL_PASSWORD=password
+  # phpmyadmin:
+  #   build:
+  #     context: ./docker/phpmyadmin
+  #   environment:
+  #     - PMA_ARBITRARY=1
+  #     - PMA_HOST=mysql
+  #     - PMA_USER=root
+  #     - PMA_PASSWORD=password
+  #   links:
+  #     - mysql
+  #   volumes:
+  #     - ./docker/data/phpmyadmin:/sessions
+  # app:
+  #   build: ./docker/nodejs
+  #   volumes:
+  #     - ./fum-web/:/src
+  #   ports:
+  #     - "3001:3001"
+  #   stdin_open: true
+  #   tty: true
+  # cms:
+  #   build: ./docker/nodejs_cms
+  #   volumes:
+  #     - ./fum-cms/:/src
+  #   ports:
+  #     - "3000:3000"
+  #   stdin_open: true
+  #   tty: true
+  # deploy:
+  #   build:
+  #     context: ./docker/deploy
+  #   volumes:
+  #     - ./docker/deploy:/deploy
+  #     - ./fum-web:/fum-web
+  #     - ./fum-cms:/fum-cms
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 2G
+  #       reservations:
+  #         memory: 2G
