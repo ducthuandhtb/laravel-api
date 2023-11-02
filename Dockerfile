@@ -24,6 +24,6 @@ WORKDIR /var/www/html/api
 # RUN chmod -R a+w storage/ bootstrap/cache
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-# RUN composer install
+RUN composer install
 
 CMD php artisan serve --host=0.0.0.0 --port=8080
